@@ -1,0 +1,6 @@
+{
+    "domain": "dev-uo20nmyd.auth0.com",
+    "clientId": "UGRjhP8KLjQOYGdDSC41YZRJjIZePwMB",
+    "audience": "https://atlantico.com.br/intranet/api",
+    "leeway": 120
+}

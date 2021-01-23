@@ -1,0 +1,13 @@
+var request = require("request");
+
+var options = {
+  method: 'GET',
+  url: 'https://dev-uo20nmyd.auth0.com/api/v2/users/google-oauth2|111781442970893407744',
+  headers: {authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik1VUkRNVFJHT0RnM09VVkZOa1F3UWtORVF6WXpNRGN4TWpFME1rUkRNa014UVRGRlJVSXpNQSJ9.eyJpc3MiOiJodHRwczovL2Rldi11bzIwbm15ZC5hdXRoMC5jb20vIiwic3ViIjoiMzE4cHlzaWk3N0tUWkMxNEFocndHemt0ZEk2NHdnWHBAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vZGV2LXVvMjBubXlkLmF1dGgwLmNvbS9hcGkvdjIvIiwiaWF0IjoxNTY3NTMxMzUzLCJleHAiOjE1Njc2MTc3NTMsImF6cCI6IjMxOHB5c2lpNzdLVFpDMTRBaHJ3R3prdGRJNjR3Z1hwIiwic2NvcGUiOiJyZWFkOnVzZXJzIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.gqMc_HnDTqy3oe_2oDTYfgm60EJYrEYoyJdvx7hcT4hqUqP3umLCKMlnQ4lU8wEcvy1QbWC4UDh291w3dGBtIVompsJzOF7wDWCU15ZTDsdrX1P_FsqXHdOyiau-WaNzZcQ76ZKdDlFuCO_mTSvsbW-dr2t2-djMfgW2uahRvJ_RFIj8_NNZmocK--6f6YQ_DsB9wjNcc0SedOTThnu6391_Ja_vgOBAzg5dtvSA_OPmAW8zu8cRxUBxs-IhAF8lY3YuVQ3JzxXclkiGZOvPtnWdI-UsoDU0TSUD0s3dP3ZZasZOxJoDNN9zBUpfGRjo_ohgKb-bcNIouyQUKBJBpA'}
+};
+
+request(options, function (error, response, body) {
+  if (error) throw new Error(error);
+
+  console.log(body);
+});

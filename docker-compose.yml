@@ -1,0 +1,104 @@
+version: '3'
+
+services:
+
+  postgres:
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_DB: intranet
+      POSTGRES_USER: intranet
+      POSTGRES_PASSWORD: admin
+    env_file:
+      - .env
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres-data:/var/lib/postgresql
+    # networks:
+    #   - postgres
+
+  client:
+    build: ./client
+    environment:
+      - REACT_APP_PORT=3000
+    env_file:
+      - .env
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+    volumes:
+      - ./client:/app/client/ #:/app/client/src
+    links:
+      - server
+    command: npm run start
+
+  server:
+    build: ./server
+    volumes:
+      #- ./server/src:/app/server/src
+      - ./server:/app/server/
+    expose:
+      - 8080
+    environment:
+      API_HOST: 3001
+      APP_SERVER_PORT: 8080
+    ports:
+      - 8080:8080
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    links: 
+      - postgres
+      - wordpress
+    # networks:
+    #   - postgres
+    command: npm run start:express
+
+  db:
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: somewordpress
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    ports:
+      - 8000:80
+    expose:
+      - 8000
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+volumes:
+    db_data: {}
+
+  # pgadmin:
+  #   links:
+  #     - postgres:postgres
+  #   image: dpage/pgadmin4
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - "8080:80"
+  #   depends_on:
+  #     - postgres
+  #   networks:
+  #     - postgres
+  #   volumes: 
+  #     - /data/pgadmin:/root/.pgadmin
+
+# networks:
+#   postgres:
+#     driver: bridge
